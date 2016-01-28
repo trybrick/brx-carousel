@@ -1,11 +1,7 @@
 'use strict';
 import brxCarouselModule from './module.js';
 
-brxCarouselModule.directive('brxCarousel', ['$rootScope', '$timeout', '$window', '$http', function ($rootScope, $timeout, $window, $http) {
-   // Usage:   Display slides
-    // 
-    // Creates: 2014-01-06
-    // 
+brxCarouselModule.directive('brxCarousel', ['$rootScope', '$timeout', '$window', '$http', '$brxJson', function ($rootScope, $timeout, $window, $http, $brxJson) {
     var directive = {
       link: link,
       restrict: 'EA',
@@ -16,7 +12,10 @@ brxCarouselModule.directive('brxCarousel', ['$rootScope', '$timeout', '$window',
     function link(scope, element, attrs) {
       var options = {
         interval: attrs.interval,
-        reverse: attrs.reverse | false
+        reverse: attrs.reverse | false,
+        jsonpCb: attrs.jsonpCb || '',
+        jsonUrl: attrs.jsonUrl || '',
+        isRssFeed: attrs.isRssFeed | false
       },
       cancelRefresh,
       wasRunning = false,
@@ -37,6 +36,12 @@ brxCarouselModule.directive('brxCarousel', ['$rootScope', '$timeout', '$window',
       // play slide show
       scope.play = function() {
         scope.stop();
+
+        // allow for explicit interval
+        var timing = options.interval || 1;
+        if (timing < 200) {
+          return;
+        }
 
         isPlaying = true;
 
@@ -145,22 +150,22 @@ brxCarouselModule.directive('brxCarousel', ['$rootScope', '$timeout', '$window',
       scope.$on('$destroy', scope.stop);
       
       // attempt to load data from url
-      if ((attrs.jsonUrl || '').indexOf('\/\/') >= 0) {
-        /* // TODO: handle jsonp
-        if (attrs.jsonUrl.indexOf('callback=') > 0) {
-
-          var methodName = 'brx' + new Date().getTime();
-
-          $window[methodName] = function(rsp){
-
+      if (options.jsonUrl.indexOf('\/\/') >= 0) {
+        if (options.jsonpCb.length > 0) {
+          function cb(rsp) {
+            scope.slides = rsp;
           }
-        } else {}
-        */
-console.log('hi');
-        $http.get(attrs.jsonUrl).then(function(rsp){
-console.log('hi2');
-          scope.slides = rsp.data;
-        });
+          if (options.isRssFeed){
+            $brxJson.feed(options.jsonUrl, options.jsonpCb, cb);
+          }
+          else {
+            $brxJson.jsonp(options.jsonUrl, options.jsonpCb, cb)
+          }
+        } else {
+          $http.get(options.jsonUrl).then(function(rsp){
+            scope.slides = rsp.data;
+          });
+        }
       }
 
       scope.activate();
