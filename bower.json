@@ -1,0 +1,25 @@
+{
+  "name": "brx-carousel",
+  "description": "Brick Carousel",
+  "main": "index.js",
+  "authors": [
+    "Tom"
+  ],
+  "homepage": "https://github.com/trybrick/brx-carousel",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.9",
+    "angular-animate": "~1.2.9",
+    "lodash": "~3.10.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.9"
+  }
+}

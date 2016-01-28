@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Angular-webpack starter kit</title>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<style>
+.carousel {
+  width: 728px;
+  height: 90px;
+  border: 2px dashed fuchsia;
+}
+
+.slide-container {
+  height: 90px;
+  width: 470px;
+  overflow: hidden; 
+  position: relative;
+  padding-left: 2px;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.slide.active {
+  display: block;
+  top: 0;
+  left: 0;
+}
+.slide.ng-animate {
+  display: block !important;
+}
+
+  </style>
+</head>
+<body style="text-align: center; width: 100%; margin: 0 auto">
+   <div data-brx-carousel="" class="carousel" data-interval="5000" data-json-url="http://brick.webscript.io/sample">
+
+   <img src="//placeholdit.imgix.net/~text?txtsize=23&txt=Brick%20Exchange%20{{$index}}&w=250&h=90" style="float: left"  data-ng-click="next()">
+    <!-- Wrapper for slides -->
+    <div class="slide-container">
+      <div data-ng-repeat="item in slides" class="slide slide-animation" data-ng-class="{'active': $index === currentIndex()}" ng-hide="$index !== currentIndex()" data-index="{{$index}}">
+
+        <span data-ng-repeat="it in item.content">
+          <a data-ng-href="{{it.img}}" target="_blank" href="javascript:void(0)">
+          <img data-ng-src="{{it.img}}" style="height: 90px" height="90px"/></a>
+        </span>
+      </div>
+    </div>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+  <script src="bundle.js"></script>
+</body>
+</html>

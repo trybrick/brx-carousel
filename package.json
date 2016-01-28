@@ -1,0 +1,58 @@
+{
+  "name": "brx-carousel",
+  "version": "1.0.0",
+  "description": "Brick Carousel",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "webpack && nodemon server.js",
+    "test": "karma start karma.conf.js",
+    "webpack": "webpack -w --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/trybrick/brx-carousel.git"
+  },
+  "author": "Tom",
+  "devDependencies": {
+    "babel-core": "~6.1.21",
+    "babel-loader": "~6.2.0",
+    "babel-polyfill": "~6.2.0",
+    "babel-preset-es2015": "~6.1.18",
+    "browser-sync": "~2.10.0",
+    "css-loader": "~0.23.0",
+    "es6-promise": "~3.0.2",
+    "exports-loader": "~0.6.2",
+    "gulp": "~3.9.0",
+    "gulp-load-plugins": "~1.1.0",
+    "gulp-nodemon": "~2.0.4",
+    "gulp-semistandard": "~0.2.1",
+    "gulp-webpack": "~1.5.0",
+    "jasmine-core": "~2.3.4",
+    "karma": "~0.13.15",
+    "karma-babel-preprocessor": "~6.0.1",
+    "karma-chrome-launcher": "~0.2.1",
+    "karma-jasmine": "~0.3.6",
+    "karma-jasmine-html-reporter": "~0.1.8",
+    "karma-nyan-reporter": "~0.2.2",
+    "karma-webpack": "~1.7.0",
+    "lodash": "^3.10.1",
+    "nodemon": "~1.8.1",
+    "opn": "^3.0.3",
+    "semistandard-loader": "0.0.3",
+    "style-loader": "~0.13.0",
+    "webpack": "~1.12.6"
+  },
+  "dependencies": {
+    "express": "~4.13.3"
+  },
+  "semistandard": {
+    "globals": [
+      "describe",
+      "beforeEach",
+      "inject",
+      "it",
+      "expect"
+    ]
+  }
+}
