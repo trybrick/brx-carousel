@@ -29300,6 +29300,8 @@
 	
 	__webpack_require__(195);
 	
+	__webpack_require__(196);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	exports["default"] = _module3["default"].name;
@@ -29334,11 +29336,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	_module2["default"].directive('brxCarousel', ['$rootScope', '$timeout', '$window', '$http', function ($rootScope, $timeout, $window, $http) {
-	  // Usage:   Display slides
-	  //
-	  // Creates: 2014-01-06
-	  //
+	_module2["default"].directive('brxCarousel', ['$rootScope', '$timeout', '$window', '$http', '$brxJson', function ($rootScope, $timeout, $window, $http, $brxJson) {
 	  var directive = {
 	    link: link,
 	    restrict: 'EA',
@@ -29349,7 +29347,10 @@
 	  function link(scope, element, attrs) {
 	    var options = {
 	      interval: attrs.interval,
-	      reverse: attrs.reverse | false
+	      reverse: attrs.reverse | false,
+	      jsonpCb: attrs.jsonpCb || '',
+	      jsonUrl: attrs.jsonUrl || '',
+	      isRssFeed: attrs.isRssFeed | false
 	    },
 	        cancelRefresh,
 	        wasRunning = false,
@@ -29370,6 +29371,12 @@
 	    // play slide show
 	    scope.play = function () {
 	      scope.stop();
+	
+	      // allow for explicit interval
+	      var timing = options.interval || 1;
+	      if (timing < 200) {
+	        return;
+	      }
 	
 	      isPlaying = true;
 	
@@ -29477,19 +29484,22 @@
 	    scope.$on('$destroy', scope.stop);
 	
 	    // attempt to load data from url
-	    if ((attrs.jsonUrl || '').indexOf('\/\/') >= 0) {
-	      /* // TODO: handle jsonp
-	      if (attrs.jsonUrl.indexOf('callback=') > 0) {
-	         var methodName = 'brx' + new Date().getTime();
-	         $window[methodName] = function(rsp){
-	         }
-	      } else {}
-	      */
-	      console.log('hi');
-	      $http.get(attrs.jsonUrl).then(function (rsp) {
-	        console.log('hi2');
-	        scope.slides = rsp.data;
-	      });
+	    if (options.jsonUrl.indexOf('\/\/') >= 0) {
+	      if (options.jsonpCb.length > 0) {
+	        var cb = function cb(rsp) {
+	          scope.slides = rsp;
+	        };
+	
+	        if (options.isRssFeed) {
+	          $brxJson.feed(options.jsonUrl, options.jsonpCb, cb);
+	        } else {
+	          $brxJson.jsonp(options.jsonUrl, options.jsonpCb, cb);
+	        }
+	      } else {
+	        $http.get(options.jsonUrl).then(function (rsp) {
+	          scope.slides = rsp.data;
+	        });
+	      }
 	    }
 	
 	    scope.activate();
@@ -29552,6 +29562,46 @@
 	    }
 	    //#endregion
 	  }
+	}]);
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _module = __webpack_require__(194);
+	
+	var _module2 = _interopRequireDefault(_module);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	_module2["default"].factory('$brxJson', ['$window', function ($win) {
+	  function execJSONP(url, cbName, cb) {
+	    var script = $win.document.createElement('script');
+	    script.async = true;
+	    var callb = 'brxexec' + Math.floor(Math.random() * 65535 + 1);
+	    $win[callb] = function (data) {
+	      var scr = $win.document.getElementById(callb);
+	      scr.parentNode.removeChild(scr);
+	      cb(data);
+	      $win[callb] = null;
+	    };
+	    var sepchar = url.indexOf('?') > -1 ? '&' : '?';
+	    script.src = url + sepchar + (cbName || 'callback') + '=' + callb;
+	    script.id = callb;
+	    $win.document.getElementsByTagName('head')[0].appendChild(script);
+	  }
+	
+	  function execFeed(url, maxResult, cbName, cb) {
+	    var url = '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=' + (maxResult || 50) + '&q=' + encodeURIComponent(url);
+	    execJSONP(url, cb);
+	  }
+	
+	  return {
+	    jsonp: execJSONP,
+	    feed: execFeed
+	  };
 	}]);
 
 /***/ }
