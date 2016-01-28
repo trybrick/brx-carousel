@@ -105,6 +105,7 @@
 									addClass: function addClass(element, className, done) {
 													if (className == 'ng-hide') {
 																	var idx = element.data().index;
+	
 																	TweenMax.to(element, 0.5, { scale: .8, ease: "easeOut" }, 'L-' + parseInt(idx + 1));
 																	TweenMax.to(element, 0.7, { xPercent: -100, rotationY: 80, onComplete: done });
 													} else {
@@ -114,8 +115,9 @@
 									removeClass: function removeClass(element, className, done) {
 													if (className == 'ng-hide') {
 																	element.removeClass('ng-hide');
-																	TweenMax.set(element, { clearProps: "all" });
 																	var idx = element.data().index;
+	
+																	TweenMax.set(element, { clearProps: "all" });
 																	TweenMax.from(element, 0.7, { xPercent: 100, rotationY: -80 }, 'L-' + parseInt(idx + 1));
 																	TweenMax.from(element, 0.5, { scale: .8, ease: "easeIn", onComplete: done });
 													} else {
