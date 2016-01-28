@@ -60,9 +60,9 @@
 	
 	var _index2 = _interopRequireDefault(_index);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	_angular2.default.module('myApp', ['ngAnimate', _index2.default]).run(function ($rootScope) {
+	_angular2["default"].module('myApp', ['ngAnimate', _index2["default"]]).run(function ($rootScope) {
 					$rootScope.$on('brx-carousel', function (evt, scope, newValue) {
 									var element = scope.element;
 									var slideIndex = scope.lastIndex();
@@ -132,7 +132,7 @@
 	// import 'angular-material/angular-material.css';
 	// import '../styles/main.css';
 	
-	_angular2.default.bootstrap(document, ['myApp']);
+	_angular2["default"].bootstrap(document, ['myApp']);
 
 /***/ },
 /* 1 */
@@ -29300,9 +29300,9 @@
 	
 	__webpack_require__(195);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	exports.default = _module3.default.name;
+	exports["default"] = _module3["default"].name;
 
 /***/ },
 /* 194 */
@@ -29318,9 +29318,9 @@
 	
 	var _angular2 = _interopRequireDefault(_angular);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	exports.default = _angular2.default.module('brxCarouselModule', []);
+	exports["default"] = _angular2["default"].module('brxCarouselModule', []);
 
 /***/ },
 /* 195 */
@@ -29332,9 +29332,9 @@
 	
 	var _module2 = _interopRequireDefault(_module);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	_module2.default.directive('brxCarousel', ['$rootScope', '$timeout', '$window', '$http', function ($rootScope, $timeout, $window, $http) {
+	_module2["default"].directive('brxCarousel', ['$rootScope', '$timeout', '$window', '$http', function ($rootScope, $timeout, $window, $http) {
 	  // Usage:   Display slides
 	  //
 	  // Creates: 2014-01-06
@@ -29556,4 +29556,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=brx-carousel.bundle.js.map

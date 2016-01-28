@@ -15,7 +15,7 @@ module.exports = {
   entry: './main.js',
   output: {
     path: PATHS.destination,
-    filename: 'bundle.js'
+    filename: 'brx-carousel.bundle.js'
   },
   resolve: {
     root: [
@@ -31,9 +31,15 @@ module.exports = {
     loaders: [
       { test: /angular\.js$/,
         loader: 'exports?angular' },
+      /*
       { test: /\.js$/,
         loader: 'babel?presets[]=es2015!semistandard',
-        exclude: /node_modules|bower_components/ },
+        exclude: /node_modules|bower_components/ }, 
+        */
+      { test: /\.js$/,
+        loaders: ['es3ify', 'babel?presets[]=es2015'],
+        exclude: /node_modules|bower_components/
+      },
       { test: /\.css$/,
         loader: 'style!css' }
     ]
