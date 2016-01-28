@@ -6,7 +6,11 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<!--[if lt IE 10]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20130526/json2.min.js"></script>
+    <![endif]-->
 <style>
 .carousel {
   width: 728px;
@@ -37,6 +41,7 @@
 }
 
   </style>
+  
 </head>
 <body style="text-align: center; width: 100%; margin: 0 auto">
    <div data-brx-carousel="" class="carousel" data-interval="5000" data-json-url="http://brick.webscript.io/sample">
@@ -52,6 +57,7 @@
         </span>
       </div>
     </div>
+    
   <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
   <script src="bundle.js"></script>
 </body>
